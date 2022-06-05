@@ -29,6 +29,8 @@ urlpatterns = [
     path('pulmono',views.pulmono,name='pulmono'),
     re_path(r'^profile/$', views.AppointmentListView.as_view(), name='profile'),
     path('doctor/<int:pk>/', views.DocDetailView.as_view(), name='doctor'),
+    re_path(r'^feedback/$', views.feedback_form,name='home'),
     path('appoinment',views.appo,name='appoinment'),
+    path('telemed',views.telemed,name='telemed'),
 
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

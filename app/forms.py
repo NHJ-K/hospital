@@ -2,7 +2,7 @@ from django import forms
 from app import models
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from app.models import AddDoctor, Appointment,doclogin
+from app.models import AddDoctor, Appointment,doclogin,Feedback
 from material import *
 
 class SignUpForm(UserCreationForm):
@@ -81,3 +81,7 @@ class AddDoctorForm(forms.ModelForm):
         model = AddDoctor
         fields = ('Doctor_Name', 'Specialist_in', 'Hospital_Name', 'Available_Days', 'Timings', 'Phone_Number', 'Mail', 'Password')
     
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        exclude = []

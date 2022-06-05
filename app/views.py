@@ -1,9 +1,9 @@
 from django.views.generic import TemplateView
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from app.forms import SignUpForm, AddDoctorForm, AppointmentForm
+from app.forms import SignUpForm, AddDoctorForm, AppointmentForm, FeedbackForm
 from django.views import generic
-from app.models import AddDoctor, Appointment,doclogin
+from app.models import AddDoctor, Appointment,doclogin,Feedback
 from django.views.generic import DetailView
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
@@ -18,6 +18,9 @@ class PaymentConfirmPageView(TemplateView):
     template_name = 'confirmation.html'
 class BookPageView(TemplateView):
     template_name = 'app.html'
+
+def telemed(request):
+    return render(request, 'telemedicine.html')
 
 def login(request):
     return render(request, 'login.html')
@@ -132,3 +135,14 @@ class AppointmentDelete(DeleteView):
     model = Appointment
     template_name = 'delete_app.html'
     success_url = reverse_lazy('profile')
+
+def feedback_form(request):
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return render(request, 'feedback/thanks.html')
+    else:
+        form = FeedbackForm()
+    return render(request, 'feedback/feedback_form.html', {'form': form})

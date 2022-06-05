@@ -41,3 +41,13 @@ class doclogin(models.Model):
     Doctor_Name = models.CharField(max_length=50)
     Specialization = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
+
+class Feedback(models.Model):
+    customer_name = models.CharField(max_length=120)
+    email = models.EmailField()
+    details = models.TextField()
+    happy = models.BooleanField()
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.customer_name
