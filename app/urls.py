@@ -11,6 +11,8 @@ urlpatterns = [
     path('payment', views.PaymentPageView.as_view(), name='payment'),
     path('payment_confirm/', views.PaymentConfirmPageView.as_view(), name='payment_confirm'),
 
+    #path('login/', views.login, name='login'),
+    #path('log/', views.log, name='log'),
     re_path(r'^login/$', auth_views.LoginView.as_view(template_name= 'login.html'), name='login'),
     re_path(r'^logout/$', auth_views.LogoutView.as_view(template_name= 'logout.html'), name='logout'),
     re_path(r'^signup/$', core_views.signup, name='signup'),
@@ -19,7 +21,14 @@ urlpatterns = [
     re_path(r'^doctor/appointment/$', core_views.AddAppointment, name='appointment'),
     path('appointment/<int:pk>/delete/', views.AppointmentDelete.as_view(), name='delete-appointment'),
     re_path(r'^list/$', views.DocListView.as_view(), name='list'),
+    path('cardio',views.cardio,name='cardio'),
+    path('dentist',views.dentist,name='dentist'),
+    path('neuro',views.neuro,name='neuro'),
+    path('gyno',views.gyno,name='gyno'),
+    path('nephro',views.nephro,name='nephro'),
+    path('pulmono',views.pulmono,name='pulmono'),
     re_path(r'^profile/$', views.AppointmentListView.as_view(), name='profile'),
     path('doctor/<int:pk>/', views.DocDetailView.as_view(), name='doctor'),
+    path('appoinment',views.appo,name='appoinment'),
 
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

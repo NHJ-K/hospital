@@ -2,7 +2,7 @@ from django import forms
 from app import models
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from app.models import AddDoctor, Appointment
+from app.models import AddDoctor, Appointment,doclogin
 from material import *
 
 class SignUpForm(UserCreationForm):
@@ -38,6 +38,7 @@ class AppointmentForm(forms.ModelForm):
     problem = forms.CharField()
     symptoms = forms.CharField()
     city = forms.CharField()
+    doctor = forms.CharField(label="Doctor Email")
 
     layout = Layout(
         Row('first_name', 'second_name'),
@@ -50,12 +51,13 @@ class AppointmentForm(forms.ModelForm):
                  Row(Column('gender', span_columns=4),
                      Column('day',
                             Row('timing'),
+                            Row('doctor'),
                             span_columns=8))))
 
     class Meta:
         model = Appointment
         fields = ('first_name', 'second_name', 'gender', 'age', 'day', 'timing', 'problem'
-                  , 'symptoms', 'phone', 'mail', 'address', 'city')
+                  , 'symptoms', 'phone', 'mail', 'address', 'city','doctor')
 
 class AddDoctorForm(forms.ModelForm):
     Doctor_Name = forms.CharField()
@@ -65,13 +67,17 @@ class AddDoctorForm(forms.ModelForm):
     Timings = forms.CharField(label="Ex: 10AM - 4PM")
     Phone_Number = forms.CharField()
     Mail = forms.CharField()
+    Password = forms.CharField(widget=forms.PasswordInput)
+
 
     layout = Layout(Fieldset('Doctor details',
                             Row('Doctor_Name',),
                             Row('Specialist_in', 'Hospital_Name'),
                             Row('Available_Days', 'Timings'),
                             Fieldset('Contact details',
-                                     Row('Phone_Number', 'Mail'),)))
+                                    Row('Phone_Number', 'Mail'),
+                                    Row('Password'))))
     class Meta:
         model = AddDoctor
-        fields = ('Doctor_Name', 'Specialist_in', 'Hospital_Name', 'Available_Days', 'Timings', 'Phone_Number', 'Mail')
+        fields = ('Doctor_Name', 'Specialist_in', 'Hospital_Name', 'Available_Days', 'Timings', 'Phone_Number', 'Mail', 'Password')
+    

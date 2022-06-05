@@ -9,6 +9,7 @@ class AddDoctor(models.Model):
     Timings = models.CharField(max_length=50)
     Phone_Number = models.CharField(max_length=10)
     Mail = models.CharField(max_length=50)
+    Password = models.CharField(max_length=50,default="1234")
 
     def get_absolute_url(self):
         return reverse('doctor', args=[str(self.id)])
@@ -28,8 +29,15 @@ class Appointment(models.Model):
     mail = models.EmailField(max_length=50)
     address = models.CharField(max_length=200)
     city = models.CharField(max_length=30)
+    doctor = models.CharField(max_length=50,default="None")
 
     def get_absolute_url(self):
         return reverse('app', args=[str(self.id)])
     def __str__(self):
         return self.first_name
+
+class doclogin(models.Model):
+    mail = models.CharField(max_length=50)
+    Doctor_Name = models.CharField(max_length=50)
+    Specialization = models.CharField(max_length=50)
+    password = models.CharField(max_length=50)
