@@ -1,0 +1,22 @@
+{% extends 'nav.html' %}
+{% block content %}
+<html>
+    <body>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>File</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in item  %}
+                <tr>
+                    <td>{{row.title}}</td>
+                    <td><a href="{{MEDIA_URL}}{{row.file}}">{{row.file}}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    </body>
+</html>
+{% endblock %}

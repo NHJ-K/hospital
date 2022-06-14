@@ -13,7 +13,7 @@ urlpatterns = [
 
     #path('login/', views.login, name='login'),
     #path('log/', views.log, name='log'),
-    re_path(r'^login/$', auth_views.LoginView.as_view(template_name= 'login.html'), name='login'),
+    re_path(r'^login/$', views.CustomLogin.as_view(template_name= 'login.html'), name='login'),
     re_path(r'^logout/$', auth_views.LogoutView.as_view(template_name= 'logout.html'), name='logout'),
     re_path(r'^signup/$', core_views.signup, name='signup'),
 
@@ -29,8 +29,12 @@ urlpatterns = [
     path('pulmono',views.pulmono,name='pulmono'),
     re_path(r'^profile/$', views.AppointmentListView.as_view(), name='profile'),
     path('doctor/<int:pk>/', views.DocDetailView.as_view(), name='doctor'),
-    re_path(r'^feedback/$', views.feedback_form,name='home'),
+    #re_path(r'^feedback/$', views.feedback_form,name='home'),
     path('appoinment',views.appo,name='appoinment'),
     path('telemed',views.telemed,name='telemed'),
+    path('labreport',views.labreport,name='labreport'),
+    path('vlabre',views.vlabreport,name='vlabre'),
 
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

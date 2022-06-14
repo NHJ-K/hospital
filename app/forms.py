@@ -85,3 +85,16 @@ class FeedbackForm(forms.ModelForm):
     class Meta:
         model = Feedback
         exclude = []
+
+
+class UploadFileForm(forms.Form):
+    title = forms.CharField(max_length=50)
+    Doctor_Email = forms.CharField(max_length=50)
+    file = forms.FileField()
+    #doctor = forms.ModelChoiceField(
+    #   queryset=AddDoctor.objects.values_list("Mail", flat=True).distinct(),
+      # empty_label=None
+    #)
+    #doctor = forms.ModelChoiceField(queryset=AddDoctor.objects.all())
+    #docchoise = [(None, 'Select Doctor')]
+    #doctor = forms.ChoiceField(choices=docchoise)

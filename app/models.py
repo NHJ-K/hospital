@@ -41,6 +41,7 @@ class doclogin(models.Model):
     Doctor_Name = models.CharField(max_length=50)
     Specialization = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
+    
 
 class Feedback(models.Model):
     customer_name = models.CharField(max_length=120)
@@ -51,3 +52,9 @@ class Feedback(models.Model):
 
     def __str__(self):
         return self.customer_name
+
+class files(models.Model):
+    title = models.CharField(max_length=50)
+    Doctor_Email = models.CharField(max_length=50)
+    #filename = models.CharField(max_length=50)
+    file = models.FileField()

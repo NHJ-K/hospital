@@ -1,0 +1,23 @@
+{% extends 'nav.html' %}
+{% block content %}
+{% load static %}
+{% load material_form %}
+<html>
+
+<head>
+    <title>MyDoc Appointment</title>
+    <link rel="icon" href="images/doc.png" type="image/gif" sizes="16x16" />
+    <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="/static/css/materialize.css" />
+</head>
+
+<body>
+    <form method="POST" class="post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+</body>
+
+</html>
+{% endblock %}

@@ -16,7 +16,7 @@
                     <li><a class="blue-text text-darken-1" href="#popular">Popular Searches</a></li>
                     <li><a class="blue-text text-darken-1" href="#about">About</a></li>
                     <li><a class="blue-text text-darken-1" href="/telemed">Tele Medicine</a></li>
-                    <li><a class="blue-text text-darken-1" href="/feedback">Feedback</a></li>
+                    <!--<li><a class="blue-text text-darken-1" href="/feedback">Feedback</a></li>-->
                     {% if request.user.is_authenticated %}
                         <li><a class="dropdown-button blue-text text-darken-1" data-activates="dropdown"
                             data-beloworigin="true"><i class="material-icons left">account_circle</i>
@@ -43,9 +43,11 @@
             {% elif request.user|has_group:'doc' %}
                 <a href="{% url 'profile' %}"> <span class="title blue-text text-darken-1">Profile</span></a>
                 <a href="{% url 'appoinment' %}"> <span class="title blue-text text-darken-1">Appoinments</span></a>
+                <a href="{% url 'vlabre' %}"><span class="title blue-text text-darken-1">View Reports</span></a>
                 <a href="{% url 'logout' %}?next={% url 'home' %}"><span class="title blue-text text-darken-1">Logout</span></a>
             {% else %}
                 <a href="{% url 'profile' %}"> <span class="title blue-text text-darken-1">Profile</span></a>
+                <a href="{% url 'labreport' %}"> <span class="title blue-text text-darken-1">Upload Report</span></a>
                 <a href="{% url 'logout' %}?next={% url 'home' %}"><span class="title blue-text text-darken-1">Logout</span></a>
             {% endif %}
         {% else %}

@@ -1,14 +1,25 @@
 from django.views.generic import TemplateView
 from django.contrib.auth import login, authenticate
-from django.shortcuts import render, redirect
-from app.forms import SignUpForm, AddDoctorForm, AppointmentForm, FeedbackForm
+from django.shortcuts import render, redirect,HttpResponse,HttpResponseRedirect
+from app.forms import SignUpForm, AddDoctorForm, AppointmentForm, FeedbackForm, UploadFileForm
 from django.views import generic
-from app.models import AddDoctor, Appointment,doclogin,Feedback
+from app.models import AddDoctor, Appointment,doclogin,Feedback,files
 from django.views.generic import DetailView
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
+from django.contrib.auth import login
+from django.contrib.auth import views as auth_views
+from mydoc.settings import MEDIA_ROOT, MEDIA_URL
+
+
+class CustomLogin(auth_views.LoginView):
+    def form_valid(self, form):
+         login(self.request, form.get_user())
+         print(form.cleaned_data['username'])
+         self.request.session['mail'] = form.cleaned_data['username']
+         return HttpResponseRedirect(self.get_success_url())
 
 class HomePageView(TemplateView) :
 	template_name = 'index.html'
@@ -22,8 +33,7 @@ class BookPageView(TemplateView):
 def telemed(request):
     return render(request, 'telemedicine.html')
 
-def login(request):
-    return render(request, 'login.html')
+
 
 def log(request):
     if request.method == 'POST':
@@ -31,6 +41,8 @@ def log(request):
         passw = request.POST.get('password')
         if doclogin.objects.filter(mail=uname).exists():
             if doclogin.objects.filter(mail=uname,password=passw).exists():
+                print(uname)
+                request.session['mail'] = uname
                 return render(request, 'index.html',{'utype=':'Doctor'})
             else:
                 return render(request, 'login.html')
@@ -146,3 +158,35 @@ def feedback_form(request):
     else:
         form = FeedbackForm()
     return render(request, 'feedback/feedback_form.html', {'form': form})
+
+#def labreport(request):
+#    item = AddDoctor.objects.all()
+#    return render(request, 'labreport.html', {'item': item})
+
+def labreport(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            handle_uploaded_file(request.FILES['file'])  
+            tt = files(title=request.POST.get('title'),Doctor_Email=request.POST.get('Doctor_Email'),file=request.FILES['file'])
+            tt.save()
+            return HttpResponse("File uploaded successfuly") 
+        else:
+            form = UploadFileForm()
+    else:
+        form = UploadFileForm()
+    return render(request, 'labreport.html', {'form': form})
+
+def handle_uploaded_file(f):  
+    destination = open(MEDIA_URL+f.name, 'wb+')
+    for chunk in f.chunks():  
+        destination.write(chunk)
+    destination.close()
+
+
+def vlabreport(request):
+    mail = request.session.get("mail")
+    print(mail)
+    item = files.objects.filter(Doctor_Email=mail)
+    print(item)
+    return render(request, 'vlabreport.html', {'item': item})
