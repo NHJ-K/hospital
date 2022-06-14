@@ -178,7 +178,9 @@ def labreport(request):
     return render(request, 'labreport.html', {'form': form})
 
 def handle_uploaded_file(f):  
-    destination = open(MEDIA_URL+f.name, 'wb+')
+    fname = str(f.name)
+    fname= fname.replace(" ","_")
+    destination = open('./app/static/uploads/'+fname, 'wb+')
     for chunk in f.chunks():  
         destination.write(chunk)
     destination.close()
@@ -188,5 +190,5 @@ def vlabreport(request):
     mail = request.session.get("mail")
     print(mail)
     item = files.objects.filter(Doctor_Email=mail)
-    print(item)
+    print(item[0].file)
     return render(request, 'vlabreport.html', {'item': item})
